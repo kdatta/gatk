@@ -3,11 +3,14 @@ package org.broadinstitute.hellbender.tools.walkers.genotyper;
 import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.genotyper.SampleList;
 
+import java.io.Serializable;
+
 /**
 * {@link PloidyModel} implementation tailored to work with a homogeneous constant ploidy
 * across samples and positions.
 */
-public final class HomogeneousPloidyModel implements PloidyModel {
+public final class HomogeneousPloidyModel implements PloidyModel, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private SampleList sampleList;
 

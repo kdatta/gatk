@@ -2,6 +2,7 @@ package org.broadinstitute.hellbender.utils.genotyper;
 
 import org.broadinstitute.hellbender.utils.collections.IndexedSet;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -9,7 +10,8 @@ import java.util.Collection;
  *
  * @author Valentin Ruano-Rubio &lt;valentin@broadinstitute.org&gt;
  */
-public final class IndexedSampleList implements SampleList {
+public final class IndexedSampleList implements SampleList, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final IndexedSet<String> samples;
 

@@ -6,10 +6,13 @@ import org.broadinstitute.hellbender.utils.genotyper.AlleleList;
 import org.broadinstitute.hellbender.utils.genotyper.ReadLikelihoods;
 import org.broadinstitute.hellbender.utils.genotyper.SampleList;
 
+import java.io.Serializable;
+
 /**
  * Encapsulates the data use to make the genotype calls.
  */
-public final class GenotypingData<A extends Allele> implements SampleList, AlleleList<A> {
+public final class GenotypingData<A extends Allele> implements SampleList, AlleleList<A>, Serializable{
+    private static final long serialVersionUID = 1L;
 
     private final PloidyModel ploidyModel;
 

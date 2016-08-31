@@ -7,6 +7,7 @@ import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.functional.IntBiConsumer;
 import org.broadinstitute.hellbender.utils.functional.IntToDoubleBiFunction;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +60,8 @@ import java.util.stream.IntStream;
  *
  * The total number of possible genotypes is only bounded by the maximum allele index.
  */
-public final class GenotypeAlleleCounts implements Comparable<GenotypeAlleleCounts> {
+public final class GenotypeAlleleCounts implements Comparable<GenotypeAlleleCounts>, Serializable{
+    private static final long serialVersionUID = 1L;
 
     private static final double UNCOMPUTED_LOG_10_COMBINATION_COUNT = -1;
 

@@ -14,6 +14,7 @@ import org.broadinstitute.hellbender.utils.downsampling.AlleleBiasedDownsampling
 import org.broadinstitute.hellbender.utils.read.GATKRead;
 import org.broadinstitute.hellbender.utils.variant.GATKVCFConstants;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -27,7 +28,8 @@ import java.util.stream.IntStream;
  *
  * @author Valentin Ruano-Rubio &lt;valentin@broadinstitute.org&gt;
  */
-public final class ReadLikelihoods<A extends Allele> implements SampleList, AlleleList<A> {
+public final class ReadLikelihoods<A extends Allele> implements SampleList, AlleleList<A>, Serializable{
+    private static final long serialVersionUID = 1L;
 
     /**
      * Index indicaintg that the reference allele is missing.

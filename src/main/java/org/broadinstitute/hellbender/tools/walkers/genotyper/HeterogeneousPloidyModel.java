@@ -4,12 +4,14 @@ import org.broadinstitute.hellbender.utils.MathUtils;
 import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.genotyper.SampleList;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * General heterogeneous ploidy model.
  */
-public final class HeterogeneousPloidyModel implements PloidyModel {
+public final class HeterogeneousPloidyModel implements PloidyModel, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final SampleList sampleList;
 

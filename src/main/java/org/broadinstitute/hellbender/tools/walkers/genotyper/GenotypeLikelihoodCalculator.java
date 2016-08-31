@@ -6,13 +6,15 @@ import org.broadinstitute.hellbender.utils.MathUtils;
 import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.genotyper.LikelihoodMatrix;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
  * Helper to calculate genotype likelihoods given a ploidy and an allele count (number of possible distinct alleles).
  */
-public final class GenotypeLikelihoodCalculator {
+public final class GenotypeLikelihoodCalculator implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     /**
      * Maximum number of components (or distinct alleles) for any genotype with this calculator ploidy and allele count.
@@ -253,7 +255,7 @@ public final class GenotypeLikelihoodCalculator {
      */
     public <A extends Allele> GenotypeLikelihoods genotypeLikelihoods(final LikelihoodMatrix<A> likelihoods) {
         Utils.nonNull(likelihoods);
-        Utils.validateArg(likelihoods.numberOfAlleles() == alleleCount, "mismatch between allele list and alleleCount");
+        Utils.validateArg(likelihoods.numberOfAlleles() == alleleCount, String.format("mismatch between allele list size %d and alleleCount %d", likelihoods.numberOfAlleles(), alleleCount));
         final int readCount = likelihoods.numberOfReads();
         ensureReadCapacity(readCount);
 

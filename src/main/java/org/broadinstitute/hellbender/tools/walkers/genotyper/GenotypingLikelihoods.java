@@ -6,12 +6,14 @@ import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.genotyper.AlleleList;
 import org.broadinstitute.hellbender.utils.genotyper.SampleList;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Genotyping Likelihoods collection.
  */
-public final class GenotypingLikelihoods<A extends Allele> implements SampleList, AlleleList<A> {
+public final class GenotypingLikelihoods<A extends Allele> implements SampleList, AlleleList<A>, Serializable{
+    private static final long serialVersionUID = 1L;
 
     private final GenotypeLikelihoods[] likelihoods;
 

@@ -7,6 +7,7 @@ import org.broadinstitute.hellbender.utils.genotyper.SampleList;
  *
  */
 public interface PloidyModel extends SampleList {
+    static final long serialVersionUID = 1L;
 
     /**
      * Return the assumed ploidy for a sample given its index.

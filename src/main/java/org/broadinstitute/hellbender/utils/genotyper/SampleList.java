@@ -2,6 +2,7 @@ package org.broadinstitute.hellbender.utils.genotyper;
 
 import org.broadinstitute.hellbender.utils.Utils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -14,9 +15,10 @@ import java.util.*;
 //Note: Names in this interface are unusual because of name clash in a subclass.
 // For example the name of SampleList.numberOfSamples() cannot be simply size(), as would be usual,
 // because {@link ReadLikelihoods} implements AlleleList and SampleList and then size() would be ambiguous.
-public interface SampleList  {
+public interface SampleList extends Serializable{
+    static final long serialVersionUID = 1L;
 
-    static final SampleList EMPTY_LIST = new SampleList() {
+    static final SampleList EMPTY_LIST = new SampleList() { static final long serialVersionUID = 1L;
         @Override
         public int numberOfSamples() {
             return 0;
@@ -170,7 +172,7 @@ public interface SampleList  {
      */
     public static SampleList singletonSampleList(final String sampleName) {
         Utils.nonNull(sampleName, "the sample name cannot be null");
-        return new SampleList() {
+        return new SampleList() {static final long serialVersionUID = 1L;
             @Override
             public int numberOfSamples() {
                 return 1;

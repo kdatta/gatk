@@ -21,6 +21,7 @@ import java.util.Map;
  * Class for performing the pair HMM for local alignment using AVX instructions contained in a native shared library.
  */
 public final class VectorLoglessPairHMM extends LoglessPairHMM {
+    private static final long serialVersionUID = 1L;
 
     private static final Logger logger = LogManager.getLogger(VectorLoglessPairHMM.class);
     private long threadLocalSetupTimeDiff = 0;
