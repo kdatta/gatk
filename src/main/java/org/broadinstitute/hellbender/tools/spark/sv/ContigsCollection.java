@@ -36,7 +36,9 @@ class ContigsCollection implements Serializable {
         }else{
             assemblyContents = new ArrayList<>();
             for(int i=0; i<FASTAFileContents.size(); i+=2){
-                assemblyContents.add( new LocalAssemblyContig(assemblyID, FASTAFileContents.get(i).replace(">", ""), FASTAFileContents.get(i+1)) );
+                final String nameLine = FASTAFileContents.get(i).replace(">", "");
+                final int stop = nameLine.contains(" ") ? nameLine.indexOf(" ") : nameLine.length();
+                assemblyContents.add( new LocalAssemblyContig(assemblyID, nameLine.substring(0, stop), FASTAFileContents.get(i+1)) );
             }
         }
     }
