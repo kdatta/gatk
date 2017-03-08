@@ -104,7 +104,9 @@ dependencies {
     testCompile(javadocJDKFiles)
 
     compile 'org.broadinstitute:barclay:1.0.0-24-g87c3fa2-SNAPSHOT'
-    compile 'com.intel:genomicsdb:0.3.0'
+    compile 'com.intel:genomicsdb-gatk4:0.4.0'
+    compile group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.2'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     compile 'com.opencsv:opencsv:3.4'
     compile 'com.google.guava:guava:18.0'
     compile 'com.github.samtools:htsjdk:'+ htsjdkVersion
