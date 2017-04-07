@@ -35,8 +35,6 @@ public final class GenomicsDBImportIntegrationTest extends CommandLineProgramTes
   private static final String GENOMICSDB_ARRAYNAME = "gatk4-genomicsdb-test-0";
   private static final File TEST_CALLSETMAP_JSON_FILE = new File(TEST_OUTPUT_DIRECTORY + "/callset.json");
   private static final File TEST_VIDMAP_JSON_FILE = new File(TEST_OUTPUT_DIRECTORY + "/vidmap.json");
-  private static final File TEST_LOADER_JSON_FILE = new File(TEST_OUTPUT_DIRECTORY + "/loader.json");
-  private static final String TEST_GENERATED_COMBINED_GVCF = TEST_OUTPUT_DIRECTORY + "/test.combined.g.vcf.gz";
 
   private static final String hg00096 = publicTestDir + "large/gvcfs/HG00096.g.vcf.gz";
   private static final String hg00268 = publicTestDir + "large/gvcfs/HG00268.g.vcf.gz";
@@ -55,16 +53,17 @@ public final class GenomicsDBImportIntegrationTest extends CommandLineProgramTes
 
     final ArgumentsBuilder args = new ArgumentsBuilder();
     args.add("-GW"); args.add(GENOMICSDB_WORKSPACE.getAbsolutePath());
+    args.add("-GCWS"); args.add(true);
+    args.add("-GA"); args.add(GENOMICSDB_ARRAYNAME);
+    args.add("-R"); args.add(TEST_REFERENCE_GENOME);
 
-    SimpleInterval simpleInterval = new SimpleInterval("chr20", 69491, 69521);
+    SimpleInterval simpleInterval = new SimpleInterval("chr20", 17960187, 17981446);
     args.add("-L"); args.add(simpleInterval);
     args.add("-V"); args.add(hg00096);
     args.add("-V"); args.add(hg00268);
-    args.add("-V"); args.add(na19625);
-    args.add("-GA"); args.add(GENOMICSDB_ARRAYNAME);
+    args.add("-V"); args.add(na19625);                  
     args.add("-GVID"); args.add(TEST_VIDMAP_JSON_FILE.getAbsolutePath());
     args.add("-GCS"); args.add(TEST_CALLSETMAP_JSON_FILE.getAbsolutePath());
-    args.add("-R"); args.add(TEST_REFERENCE_GENOME);
 
     runCommandLine(args);
 
@@ -76,28 +75,17 @@ public final class GenomicsDBImportIntegrationTest extends CommandLineProgramTes
         GENOMICSDB_ARRAYNAME,
         TEST_REFERENCE_GENOME.getAbsolutePath(), null, new BCF2Codec());
 
-    final VariantContextWriter writer =
-      new VariantContextWriterBuilder().setOutputVCFStream(new FileOutputStream(TEST_GENERATED_COMBINED_GVCF)).unsetOption(
-        Options.INDEX_ON_THE_FLY).build();
-
-    writer.writeHeader((VCFHeader)(featureReader.getHeader()));
-
     CloseableTribbleIterator<VariantContext> actualVcs = featureReader.query(simpleInterval.getContig(), simpleInterval.getStart(), simpleInterval.getEnd());
-    while (actualVcs.hasNext()) {
-      writer.add(actualVcs.next());
-    }
-
-    actualVcs.close();
 
     AbstractFeatureReader<VariantContext, LineIterator> reader = AbstractFeatureReader.getFeatureReader(combined, new VCFCodec(), false);
     CloseableTribbleIterator<VariantContext> expectedVcs = reader.query(simpleInterval.getContig(), simpleInterval.getStart(), simpleInterval.getEnd());
 
     assertCondition(actualVcs, expectedVcs, (a,e) -> VariantContextTestUtils.assertVariantContextsAreEqual(a,e, Collections.emptyList()));
 
+    actualVcs.close();
     IOUtils.deleteRecursivelyOnExit(GENOMICSDB_WORKSPACE);
     FileUtils.deleteQuietly(TEST_CALLSETMAP_JSON_FILE);
     FileUtils.deleteQuietly(TEST_VIDMAP_JSON_FILE);
-    FileUtils.deleteQuietly(TEST_LOADER_JSON_FILE);
   }
 
   private static <T> void assertCondition(Iterable<T> actual, Iterable<T> expected, BiConsumer<T,T> assertion){
